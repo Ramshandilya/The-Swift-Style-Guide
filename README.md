@@ -17,7 +17,7 @@ Where the guide is silent, default to [Apple's coding guidelines for Cocoa](http
 
 ## Table of Contents
 * [Naming](#naming)
-* [Code Organization](#code-crganization)
+* [Code Organization](#code-organization)
 * [Comments](#comments)
 * [Mutability-Immutability](#mutability-immutability)
 * [Types](#types)
