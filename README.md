@@ -375,7 +375,7 @@ The only exception to this rule is the `for-conditional-increment` construct, wh
 This guide is inspired (shamelessly-taken-from) these sources -
 * [The Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide)
 * [Github Swift Style Guide](https://github.com/github/swift-style-guide)
-* @peculiar
+* [@peculiar](https://github.com/peculiar)
 
 ----
 If you have any suggestions, feel free to send a pull request.
