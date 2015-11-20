@@ -21,9 +21,9 @@ Where the guide is silent, default to [Apple's coding guidelines for Cocoa](http
 * [Comments](Comments)
 * [Mutability-Immutability](Mutability-Immutability)
 * [Types](Types)
+* [Optionals](Optionals)
 * [Closures](Closures)
 * [Classes and Structures](Classes-and-Structures)
-* [Optionals](Optionals)
 * [Singletons](Singletons)
 * [Semicolons](Semicolons)
 * [Miscellaneous](Miscellaneous)
@@ -103,7 +103,7 @@ Constants are defined using the `let` keyword, and variables with the `var` keyw
 * `let` also allows the compiler to make optimizations.
 
 ## Types
-Try to use native Swift types before you come up with your own. Every type can be extended, so sometimes instead of introducing new types, it's convenient to extend or alias existing ones.
+Use native Swift types before you come up with your own. Every type can be extended, so sometimes instead of introducing new types, it's convenient to extend or alias existing ones.
 
 Remember that Objective-C classes that have native Swift equivalents are not automatically bridged, e.g. `NSString` is not implicitly bridged to `String` in the following example.
 
@@ -149,6 +149,51 @@ let events: [Timestamp: Event]
 class VideoArticle : Article
 let events : [Timestamp : Event]
 ```
+
+## Optionals
+Declare variables and function return types as optional with `?` where a `nil` value is acceptable.
+
+#### Avoid Using Force-Unwrapping of Optionals
+If you have an identifier `foo` of type `FooType?`, don't force-unwrap (`foo!`) it to get to the underlying value. Force unwrapping is more prone to lead to runtime crashes.
+
+Instead, use *Optional Binding* to safely unwrap the value:
+```swift
+if let foo = foo {
+    // Use unwrapped `foo` value in here
+} else {
+    // If appropriate, handle the case where the optional is nil
+}
+```
+Unwrapping several optionals in nested if-let statements is forbidden, as it leads to "pyramid of doom". Swift allows you to unwrap multiple optionals in one statement.
+```swift
+let name: String?
+let age: Int?
+
+if let name = name, age = age where age >= 13 {
+    /* ... */
+}
+```
+Or use `guard` statements
+```swift
+guard let modelURL = NSBundle.mainBundle().URLForResource(modelName, withExtension:"momd") else {
+            fatalError("Error loading model from bundle")
+        }
+        
+        guard let managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL) else {
+            fatalError("Error initializing mom from: \(modelURL)")
+        }
+        
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+```
+You might want to use Swift's Optional Chaining in some of these cases, such as:
+```swift
+// Call the function if `foo` is not nil. If `foo` is nil, ignore we ever tried to make the call
+foo?.callSomethingIfFooIsNotNil()
+```
+#### Avoid Using Implicitly Unwrapped Optionals
+Wherever possible, use `let foo: FooType?` instead of `let foo: FooType!`.
+
+Use implicitly unwrapped types only for instance variables that you know will be initialized later before use, such as subviews that will be set up in viewDidLoad.
 
 ## Closure Expressions
 
@@ -273,10 +318,6 @@ class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDel
   // all methods
 }
 ```
-#### Make classes final by default
-Classes should start as `final`, and only be changed to allow subclassing if a valid need for inheritance has been identified. Even in that case, as many definitions as possible within the class should be final as well, following the same rules.
-
-Composition is usually preferable to inheritance, and opting in to inheritance hopefully means that more thought will be put into the decision.
 
 #### Struct Intializers
 Use the native Swift struct initializers rather than the legacy constructors.
@@ -292,51 +333,6 @@ let bounds = CGRectMake(40, 20, 120, 80)
 let centerPoint = CGPointMake(96, 42)
 ```
 Prefer the struct-scope constants `CGRect.infinite`, `CGRect.null`, etc. over global constants `CGRectInfinite`, `CGRectNull`, etc. For existing variables, you can use the shorter `.zero`.
-
-## Optionals
-Declare variables and function return types as optional with `?` where a `nil` value is acceptable.
-
-#### Avoid Using Force-Unwrapping of Optionals
-If you have an identifier `foo` of type `FooType?`, don't force-unwrap (`foo!`) it to get to the underlying value. Force unwrapping is more prone to lead to runtime crashes.
-
-Instead, use *Optional Binding* to safely unwrap the value:
-```swift
-if let foo = foo {
-    // Use unwrapped `foo` value in here
-} else {
-    // If appropriate, handle the case where the optional is nil
-}
-```
-Unwrapping several optionals in nested if-let statements is forbidden, as it leads to "pyramid of doom". Swift allows you to unwrap multiple optionals in one statement.
-```swift
-let name: String?
-let age: Int?
-
-if let name = name, age = age where age >= 13 {
-    /* ... */
-}
-```
-Or use `guard` statements
-```swift
-guard let modelURL = NSBundle.mainBundle().URLForResource(modelName, withExtension:"momd") else {
-            fatalError("Error loading model from bundle")
-        }
-        
-        guard let managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL) else {
-            fatalError("Error initializing mom from: \(modelURL)")
-        }
-        
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-```
-You might want to use Swift's Optional Chaining in some of these cases, such as:
-```swift
-// Call the function if `foo` is not nil. If `foo` is nil, ignore we ever tried to make the call
-foo?.callSomethingIfFooIsNotNil()
-```
-#### Avoid Using Implicitly Unwrapped Optionals
-Wherever possible, use `let foo: FooType?` instead of `let foo: FooType!`.
-
-Use implicitly unwrapped types only for instance variables that you know will be initialized later before use, such as subviews that will be set up in viewDidLoad.
 
 ## Singletons
 Mark the `init` method as `private`. This prevents others from using the default '()' initializer for the class.
@@ -375,7 +371,7 @@ The only exception to this rule is the `for-conditional-increment` construct, wh
 This guide is inspired (shamelessly-taken-from) these sources -
 * [The Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide)
 * [Github Swift Style Guide](https://github.com/github/swift-style-guide)
-* [@peculiar](https://github.com/peculiar)
+* A little help from [@darcwader](https://github.com/darcwader), [@peculiar](https://github.com/peculiar).
 
 ----
 If you have any suggestions, feel free to send a pull request.
