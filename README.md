@@ -16,17 +16,17 @@ The objective of the this guide is to encourage patterns that accomplish the fol
 Where the guide is silent, default to [Apple's coding guidelines for Cocoa](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html).
 
 ## Table of Contents
-* [Naming](Naming)
-* [Code Organization](Code-Organization)
-* [Comments](Comments)
-* [Mutability-Immutability](Mutability-Immutability)
-* [Types](Types)
-* [Optionals](Optionals)
-* [Closures](Closures)
-* [Classes and Structures](Classes-and-Structures)
-* [Singletons](Singletons)
-* [Semicolons](Semicolons)
-* [Miscellaneous](Miscellaneous)
+* [Naming](#naming)
+* [Code Organization](#code-crganization)
+* [Comments](#comments)
+* [Mutability-Immutability](#mutability-immutability)
+* [Types](#types)
+* [Optionals](#optionals)
+* [Closures](#closures)
+* [Classes and Structures](#classes-and-structures)
+* [Singletons](#singletons)
+* [Semicolons](#semicolons)
+* [Miscellaneous](#miscellaneous)
 
 ----
 ## Naming
