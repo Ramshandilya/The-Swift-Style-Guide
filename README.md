@@ -1,5 +1,5 @@
 # The Swift Style Guide
-A guide to Swift coing style and guidelines.
+A guide to Swift coding style and guidelines.
 ## Objective
 Software (a.k.a. source code) has a number of interesting characteristics -
 * It is written once but read many times.
