@@ -22,7 +22,7 @@ Where the guide is silent, default to [Apple's coding guidelines for Cocoa](http
 * [Mutability-Immutability](#mutability-immutability)
 * [Types](#types)
 * [Optionals](#optionals)
-* [Closures](#closures)
+* [Closures](#closure-expressions)
 * [Classes and Structures](#classes-and-structures)
 * [Singletons](#singletons)
 * [Semicolons](#semicolons)
@@ -32,7 +32,7 @@ Where the guide is silent, default to [Apple's coding guidelines for Cocoa](http
 ## Naming
 Names should be meaningful and compact, written in camelCase. Try to ask yourself whether the name of a type sufficiently explains its behavior. Meaningful naming is very important to other developers because they define some expectations about their own roles.
 * **Always** use meaningful english names that are self-descriptive.
-* **Always** start class names, typedefs and enums type with an uppercase letter.
+* **Always** start names of classes, structs, typealias and enumerations with an uppercase letter.
 * **Always** start names of variables, functions, and methods with a lowercase letter.
 * Abbreviations should be **avoided**, except where they are widely accepted *(e.g. fileURL)*
 * **Never** create similar names. In particular, do not create names that differ only by case.
@@ -108,7 +108,7 @@ Use native Swift types before you come up with your own. Every type can be exten
 Remember that Objective-C classes that have native Swift equivalents are not automatically bridged, e.g. `NSString` is not implicitly bridged to `String` in the following example.
 
 ```swift
-func lowercase(string String) -> String
+func lowercase(string: String) -> String
 
 let string: NSString = /* ... */
 
@@ -176,14 +176,14 @@ if let name = name, age = age where age >= 13 {
 Or use `guard` statements
 ```swift
 guard let modelURL = NSBundle.mainBundle().URLForResource(modelName, withExtension:"momd") else {
-            fatalError("Error loading model from bundle")
-        }
+    fatalError("Error loading model from bundle")
+}
         
-        guard let managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL) else {
-            fatalError("Error initializing mom from: \(modelURL)")
-        }
+guard let managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL) else {
+    fatalError("Error initializing mom from: \(modelURL)")
+}
         
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
 ```
 You might want to use Swift's Optional Chaining in some of these cases, such as:
 ```swift
@@ -296,6 +296,7 @@ class BoardLocation {
 When adding protocol conformance to a class, prefer adding a separate class extension for the protocol methods. This keeps the related methods grouped together with the protocol and can simplify instructions to add a protocol to a class with its associated methods.
 
 Also, don't forget the `// MARK: ` comment to keep things well-organized!
+
 **Preferred :**
 ```swift
 class MyViewcontroller: UIViewController {
